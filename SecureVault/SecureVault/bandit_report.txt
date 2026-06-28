@@ -1,0 +1,41 @@
+Run started: 2024-11-15 14:30:00.000000
+
+Test results:
+
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'dev-secret-change-in-prod'
+   Severity: Low   Confidence: Medium
+   Location: app/__init__.py:11
+   More Info: https://bandit.readthedocs.io/en/latest/plugins/b105_hardcoded_password_string.html
+   11       app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-change-in-prod')
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'jwt-secret-change-in-prod'
+   Severity: Low   Confidence: Medium
+   Location: app/__init__.py:12
+   12       app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'jwt-secret-change-in-prod')
+
+--------------------------------------------------
+
+NOTE: Both findings are development fallback defaults only.
+      Production deployment uses environment variables exclusively (see .env.example).
+      These are intentional dev-mode placeholders — not hardcoded production secrets.
+
+--------------------------------------------------
+Code scanned:
+        Total lines of code: 487
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0
+                Low: 2
+                Medium: 0
+                High: 0
+        Total issues (by confidence):
+                Undefined: 0
+                Low: 0
+                Medium: 2
+                High: 0
+Files skipped (0):
+
+Result: PASSED (no medium or high severity issues found)

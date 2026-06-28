@@ -1,0 +1,134 @@
+{
+  "report_metadata": {
+    "scan_id": 1,
+    "target_url": "http://testphp.vulnweb.com",
+    "generated_at": "2024-11-15T14:32:07.841Z",
+    "tool": "SecureVault (OWASP ZAP Integration)",
+    "standard": "OWASP Top 10 2021"
+  },
+  "summary": {
+    "total_vulnerabilities": 8,
+    "severity_breakdown": {
+      "Critical": 0,
+      "High": 2,
+      "Medium": 3,
+      "Low": 2,
+      "Info": 1
+    },
+    "risk_score": 5.19
+  },
+  "vulnerabilities": [
+    {
+      "id": 1,
+      "name": "SQL Injection",
+      "cwe_id": "CWE-89",
+      "cvss_score": 7.5,
+      "severity": "High",
+      "description": "SQL injection may be possible. The page results were successfully manipulated using the parameter value '1 AND 1=1'.",
+      "url": "http://testphp.vulnweb.com/listproducts.php",
+      "parameter": "cat",
+      "evidence": "You have an error in your SQL syntax",
+      "remediation": "Do not trust client side input, even if there is client side validation in place. Use parameterized queries or prepared statements instead of building queries from user-supplied input.",
+      "owasp_category": "A03:2021 – Injection",
+      "discovered_at": "2024-11-15T14:22:11.000Z"
+    },
+    {
+      "id": 2,
+      "name": "Cross Site Scripting (Reflected)",
+      "cwe_id": "CWE-79",
+      "cvss_score": 7.5,
+      "severity": "High",
+      "description": "Cross-site Scripting (XSS) - Reflected attack was detected. The attack was carried out via the HTTP GET parameter 'searchFor'.",
+      "url": "http://testphp.vulnweb.com/search.php",
+      "parameter": "searchFor",
+      "evidence": "<script>alert(1);</script>",
+      "remediation": "Phase: Implementation. Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid. Encode all user-supplied output before returning it to the client.",
+      "owasp_category": "A03:2021 – Injection (XSS)",
+      "discovered_at": "2024-11-15T14:23:45.000Z"
+    },
+    {
+      "id": 3,
+      "name": "Absence of Anti-CSRF Tokens",
+      "cwe_id": "CWE-352",
+      "cvss_score": 5.0,
+      "severity": "Medium",
+      "description": "No Anti-CSRF tokens were found in a HTML submission form. A cross-site request forgery attack may be possible.",
+      "url": "http://testphp.vulnweb.com/login.php",
+      "parameter": "",
+      "evidence": "<form method=\"post\" action=\"userinfo.php\">",
+      "remediation": "Phase: Architecture and Design. Use a vetted library or framework. For example, use anti-CSRF packages such as the OWASP CSRFGuard.",
+      "owasp_category": "A01:2021 – Broken Access Control (CSRF)",
+      "discovered_at": "2024-11-15T14:24:10.000Z"
+    },
+    {
+      "id": 4,
+      "name": "Vulnerable JS Library (jQuery 1.4.4)",
+      "cwe_id": "CWE-1035",
+      "cvss_score": 5.0,
+      "severity": "Medium",
+      "description": "The identified library jquery, version 1.4.4 is vulnerable. CVE-2011-4969, CVE-2012-6708, CVE-2015-9251 have been published for this library.",
+      "url": "http://testphp.vulnweb.com/js/jquery.js",
+      "parameter": "",
+      "evidence": "jquery:1.4.4",
+      "remediation": "Update jQuery to version 3.5.0 or later.",
+      "owasp_category": "A06:2021 – Vulnerable and Outdated Components",
+      "discovered_at": "2024-11-15T14:25:30.000Z"
+    },
+    {
+      "id": 5,
+      "name": "Missing Content Security Policy Header",
+      "cwe_id": "CWE-693",
+      "cvss_score": 5.0,
+      "severity": "Medium",
+      "description": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks.",
+      "url": "http://testphp.vulnweb.com/",
+      "parameter": "",
+      "evidence": "",
+      "remediation": "Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",
+      "owasp_category": "A05:2021 – Security Misconfiguration",
+      "discovered_at": "2024-11-15T14:26:00.000Z"
+    },
+    {
+      "id": 6,
+      "name": "Cookie Without Secure Flag",
+      "cwe_id": "CWE-614",
+      "cvss_score": 2.5,
+      "severity": "Low",
+      "description": "A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.",
+      "url": "http://testphp.vulnweb.com/login.php",
+      "parameter": "login",
+      "evidence": "Set-Cookie: login=test%2Ftest; path=/",
+      "remediation": "Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.",
+      "owasp_category": "A02:2021 – Cryptographic Failures",
+      "discovered_at": "2024-11-15T14:27:15.000Z"
+    },
+    {
+      "id": 7,
+      "name": "Cookie Without HttpOnly Flag",
+      "cwe_id": "CWE-1004",
+      "cvss_score": 2.5,
+      "severity": "Low",
+      "description": "A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript.",
+      "url": "http://testphp.vulnweb.com/login.php",
+      "parameter": "login",
+      "evidence": "Set-Cookie: login=test%2Ftest; path=/",
+      "remediation": "Ensure that the HttpOnly flag is set for all cookies.",
+      "owasp_category": "A05:2021 – Security Misconfiguration",
+      "discovered_at": "2024-11-15T14:27:16.000Z"
+    },
+    {
+      "id": 8,
+      "name": "Server Leaks Version Information via Server HTTP Response Header",
+      "cwe_id": "CWE-200",
+      "cvss_score": 0.0,
+      "severity": "Info",
+      "description": "The web/application server is leaking version information via the Server HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your server is subject to.",
+      "url": "http://testphp.vulnweb.com/",
+      "parameter": "",
+      "evidence": "Server: Apache/2.4.7 (Ubuntu)",
+      "remediation": "Ensure that your web server, application server, load balancer, etc. is configured to suppress the Server header or provide generic details.",
+      "owasp_category": "A05:2021 – Security Misconfiguration",
+      "discovered_at": "2024-11-15T14:28:00.000Z"
+    }
+  ]
+}
